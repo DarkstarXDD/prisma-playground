@@ -11,7 +11,7 @@ export default async function PostsPage() {
       <ul className=" py-4 grid gap-4 self-start">
         {posts.map((item) => (
           <li key={item.id}>
-            <PostPreview id={item.id} title={item.title} />
+            <PostPreview id={item.slug} title={item.title} />
           </li>
         ))}
       </ul>

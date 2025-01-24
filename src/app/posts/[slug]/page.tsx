@@ -4,25 +4,19 @@ import { format } from "date-fns"
 export default async function PostPage({
   params,
 }: {
-  params: Promise<{ id: string }>
+  params: Promise<{ slug: string }>
 }) {
-  const { id } = await params
+  const { slug } = await params
 
   const post = await prisma.post.findUnique({
     where: {
-      id: id,
+      slug: slug,
     },
   })
-
-  const foo = new Date()
-  console.log(foo)
-  console.log(foo.toISOString())
 
   const formattedCreatedDate = post?.createdAt
     ? format(post.createdAt, "dd MMMM, yyyy")
     : "No date available"
-
-  // console.log(post?.createdAt)
 
   return (
     <main className="grid gap-4 justify-items-center">
