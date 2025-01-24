@@ -1,9 +1,11 @@
-import Posts from "@/components/Posts"
+import Link from "next/link"
 
 export default function Home() {
   return (
-    <main>
-      <Posts />
+    <main className=" mt-16 mx-8">
+      <Link href={"/posts"} className="text-2xl underline">
+        View all posts
+      </Link>
     </main>
   )
 }
