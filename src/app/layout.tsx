@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} font-inter bg-[#0c1222] text-[#c5bcad] px-8 py-12`}
+        className={`${inter.variable} font-inter bg-[#0c1222] text-[#c5bcad] px-8 py-12 grid justify-items-center`}
       >
         {children}
       </body>
