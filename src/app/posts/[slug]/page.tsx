@@ -27,13 +27,19 @@ export default async function PostPage({
     ? format(post.createdAt, "dd MMMM, yyyy")
     : "No date available"
 
+  let deletePostWithId = () => {}
+
+  if (post) {
+    deletePostWithId = deletePost.bind(null, post?.id)
+  }
+
   return (
     <main className="grid gap-4 justify-items-center">
       <h1 className="text-3xl">{post?.title}</h1>
       <p>{formattedCreatedDate}</p>
       <p>{post?.content}</p>
 
-      <form action={() => deletePost(post?.id)}>
+      <form action={deletePostWithId}>
         <Button>Delete Post</Button>
       </form>
     </main>
