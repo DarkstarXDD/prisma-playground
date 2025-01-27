@@ -1,5 +1,14 @@
 import prisma from "@/lib/prisma"
 import { format } from "date-fns"
+import Button from "@/components/Button"
+
+async function deletePost(id: string) {
+  "use server"
+
+  await prisma.post.delete({
+    where: { id },
+  })
+}
 
 export default async function PostPage({
   params,
@@ -23,6 +32,10 @@ export default async function PostPage({
       <h1 className="text-3xl">{post?.title}</h1>
       <p>{formattedCreatedDate}</p>
       <p>{post?.content}</p>
+
+      <form action={() => deletePost(post?.id)}>
+        <Button>Delete Post</Button>
+      </form>
     </main>
   )
 }

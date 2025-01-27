@@ -6,7 +6,9 @@ export async function createPost(formData: FormData) {
     data: {
       title: formData.get("title") as string,
       content: formData.get("content") as string,
-      slug: (formData.get("title") as string).replace(" ", "-").toLowerCase(),
+      slug: (formData.get("title") as string)
+        .replace(/\s+/g, "-")
+        .toLowerCase(),
     },
   })
 }

@@ -1,4 +1,23 @@
-import { createPost } from "@/actions/actions"
+// import { createPost } from "@/actions/actions"
+
+import prisma from "@/lib/prisma"
+import { revalidatePath } from "next/cache"
+
+// This is how you can write the server action if writing it in the same file as the component
+async function createPost(formData: FormData) {
+  "use server"
+  await prisma.post.create({
+    data: {
+      title: formData.get("title") as string,
+      content: formData.get("content") as string,
+      slug: (formData.get("title") as string)
+        .replace(/\s+/g, "-")
+        .toLowerCase(),
+    },
+  })
+
+  revalidatePath("/posts")
+}
 
 export default async function Form() {
   return (
