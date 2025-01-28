@@ -8,7 +8,7 @@ export async function createPost(newPost: unknown) {
   const result = PostSchema.safeParse(newPost)
 
   if (!result.success) {
-    const errorMessages = result
+    const errorMessages = result.error.flatten().fieldErrors
     return errorMessages
   }
 

@@ -13,15 +13,15 @@ async function clientAction(formData: FormData) {
   const result = PostSchema.safeParse(newPost)
 
   if (!result.success) {
-    console.log(result.error.flatten())
-    // return
+    console.log(result.error.flatten().fieldErrors)
+    return
   }
 
-  const response = await createPost(result.data)
+  const response = await createPost(newPost)
 
   // Throw / Show any errors if server side validation has failed
   if (response) {
-    console.log(response.error.flatten())
+    console.log(response)
   }
 }
 
