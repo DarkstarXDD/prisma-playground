@@ -1,27 +1,33 @@
-// import { createPost } from "@/actions/actions"
+"use client"
 
-import prisma from "@/lib/prisma"
-import { revalidatePath } from "next/cache"
+import { createPost } from "@/actions/actions"
+import { PostSchema } from "@/lib/schemas"
 
-// This is how you can write the server action if writing it in the same file as the component
-async function createPost(formData: FormData) {
-  "use server"
-  await prisma.post.create({
-    data: {
-      title: formData.get("title") as string,
-      content: formData.get("content") as string,
-      slug: (formData.get("title") as string)
-        .replace(/\s+/g, "-")
-        .toLowerCase(),
-    },
-  })
+async function clientAction(formData: FormData) {
+  const newPost = {
+    title: formData.get("title"),
+    content: formData.get("content"),
+  }
 
-  revalidatePath("/posts")
+  // Client side validation
+  const result = PostSchema.safeParse(newPost)
+
+  if (!result.success) {
+    console.log(result.error.flatten())
+    // return
+  }
+
+  const response = await createPost(result.data)
+
+  // Throw / Show any errors if server side validation has failed
+  if (response) {
+    console.log(response.error.flatten())
+  }
 }
 
-export default async function Form() {
+export default function Form() {
   return (
-    <form action={createPost} className="grid gap-6 max-w-sm w-full">
+    <form action={clientAction} className="grid gap-6 max-w-sm w-full">
       <div className="grid gap-2">
         <label htmlFor="title">Post Title</label>
         <input
@@ -30,6 +36,7 @@ export default async function Form() {
           id="title"
           className="text-black outline-blue-500 px-4 py-2"
         />
+        <p id="title-error" className="text-red-400"></p>
       </div>
 
       <div className="grid gap-2">
@@ -39,11 +46,11 @@ export default async function Form() {
           id="content"
           className="text-black outline-blue-500 px-4 py-2"
         />
-
-        <button className="bg-slate-400 text-slate-800 px-4 py-2">
-          Create Post
-        </button>
+        <p id="title-error" className="text-red-400"></p>
       </div>
+      <button className="bg-slate-400 text-slate-800 px-4 py-2">
+        Create Post
+      </button>
     </form>
   )
 }
