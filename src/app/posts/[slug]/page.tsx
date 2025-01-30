@@ -29,6 +29,7 @@ export default async function PostPage({
 
   let deletePostWithId = () => {}
 
+  // You can't directly pass arguments to server actions. You have to bind them
   if (post) {
     deletePostWithId = deletePost.bind(null, post?.id)
   }

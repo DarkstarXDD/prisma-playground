@@ -17,7 +17,7 @@ async function clientAction(formData: FormData) {
     return
   }
 
-  const response = await createPost(newPost)
+  const response = await createPost(result.data)
 
   // Throw / Show any errors if server side validation has failed
   if (response) {
