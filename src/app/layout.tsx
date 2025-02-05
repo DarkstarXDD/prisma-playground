@@ -9,7 +9,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Testing Prisma",
+  title: "Prisma Playground",
 }
 
 export default function RootLayout({

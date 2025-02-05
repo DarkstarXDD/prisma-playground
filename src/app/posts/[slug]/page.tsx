@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma"
 import { format } from "date-fns"
 import Button from "@/components/Button"
+// import { revalidatePath } from "next/cache"
 
 async function deletePost(id: string) {
   "use server"
@@ -8,6 +9,8 @@ async function deletePost(id: string) {
   await prisma.post.delete({
     where: { id },
   })
+
+  // revalidatePath("/posts")
 }
 
 export default async function PostPage({
