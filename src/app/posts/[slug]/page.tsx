@@ -16,8 +16,9 @@ async function deletePost(id: string) {
 export default async function PostPage({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: { slug: string }
 }) {
+  console.log(params.slug)
   const { slug } = await params
 
   const post = await prisma.post.findUnique({
